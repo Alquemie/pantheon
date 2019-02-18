@@ -2,16 +2,19 @@
 // Don't show deprecations; useful under PHP 5.5
 error_reporting( E_ALL ^ E_DEPRECATED );
 
+
+$primary_domain = $_SERVER['HTTP_HOST'];
 // Enforce Production URL and HTTPS on Pantheon
 if (isset($_ENV['PANTHEON_ENVIRONMENT']) && php_sapi_name() != 'cli') {
   // Redirect to https://$primary_domain in the Live environment
   if ($_ENV['PANTHEON_ENVIRONMENT'] === 'live') {
-    /** Replace www.example.com with your registered domain name */
     $primary_domain = 'www.example.com';
-  }
-  else {
-    // Redirect to HTTPS on every Pantheon environment.
-    $primary_domain = $_SERVER['HTTP_HOST'];
+  } elseif ($_ENV['PANTHEON_ENVIRONMENT'] === 'test') {
+    $primary_domain = 'stage.example.com';
+  } elseif ($_ENV['PANTHEON_ENVIRONMENT'] === 'dev') {
+    $primary_domain = 'test.example.com';
+  } elseif ($_ENV['PANTHEON_ENVIRONMENT'] === 'develop') {
+    $primary_domain = 'dev.example.com';
   }
 
   if ($_SERVER['HTTP_HOST'] != $primary_domain
