@@ -107,7 +107,7 @@ endif;
 /**
 	*	Global DB Settings
 **/
-$table_prefix = 'wp_';
+$table_prefix = 'alq_';
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
